@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Message, Room, Topic, Message
+from .models import Message, Room, Topic, Message, Reply
 from .forms import RoomForm, UserForm
 
 # Create your views here.
@@ -81,7 +81,11 @@ def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all().order_by('-created')
 
-    if request.method == 'POST':
+    replies = {}
+    for message in room_messages:
+        replies[message.id] = message.reply_set.all().order_by('created')
+
+    if request.method == 'POST' and request.POST.get('message_id') == None:
         message = Message.objects.create(
                 user=request.user,
                 room=room,
@@ -89,10 +93,19 @@ def room(request, pk):
         )
         room.participants.add(request.user)
         return redirect('room', pk=room.id)
+    elif request.method == 'POST' and request.POST.get('message_id') != None:
+        reply = Reply.objects.create(
+            user=request.user,
+            room=room,
+            message=Message.objects.get(id=request.POST.get('message_id')),
+            body=request.POST.get('reply')
+        )
+        room.participants.add(request.user)
+        return redirect('room', pk=room.id)
 
     participants = room.participants.all()
 
-    context = {'room':room, 'room_messages':room_messages, 'participants':participants}
+    context = {'room':room, 'room_messages':room_messages, 'participants':participants, 'replies':replies}
     return render(request, 'base/room.html', context)
 
 def userProfile(request, pk):

@@ -1128,7 +1128,7 @@ a {
 }
 
 .reply__message {
-  padding: 2rem;
+  padding: 0.5rem;
   /* position: absolute; */
   /* z-index: 111; */
   bottom: 0;
@@ -1144,10 +1144,10 @@ a {
   border: none;
   outline: none;
   border-radius: 0.7rem;
-  height: 4.5rem;
+  height: 2.5rem;
   width: 100%;
-  margin-top: -1rem;
-  padding: 1.2rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
   font-size: 1.4rem;
   font-weight: 500;
   position: relative;
