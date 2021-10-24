@@ -1,0 +1,19 @@
+{% load dict_key%}
+
+{{message.body}}
+<div class="reply__message">
+    {% for r in replies %}
+        {% if r == message.id %}
+            {% for i in replies|dict_key:r %}
+                <p>
+                    <a href="{% url 'user-profile' i.user.id %}">@{{user}}</a> replied {{i}}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input name="reply" placeholder="Write your reply here..." />
+        <input type="hidden" value={{message.id}} name="message_id">
+    </form>
+</div>
