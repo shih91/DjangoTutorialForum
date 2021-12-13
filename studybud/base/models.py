@@ -1,8 +1,33 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.db.models.deletion import SET_NULL
 
 # Create your models here.
+class UserManager(BaseUserManager):
+    def create_user(self, email, name, password=None):
+        if not email:
+            raise ValueError("User must have an email")
+        if not password:
+            raise ValueError("User must have a password")
+        if not name:
+            raise ValueError("User must have a full name")
+
+        user = self.model(
+            email=self.normalize_email(email)
+        )
+        user.name = name
+        user.set_password(password)  # change password to hash
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, name, password=None):
+        user = self.create_user(
+            email,
+            name,
+            password=password,
+        )
+        return user
+
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(unique=True, null=True)
@@ -11,7 +36,7 @@ class User(AbstractUser):
     avatar = models.ImageField(default='avatar.svg')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = []
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
