@@ -4,13 +4,21 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 django-on-heroku = "*"
-pypi = "*"
-psycopg2-binary = "*"
-djangorestframework = "*"
-django-heroku = "*"
-django-cors-headers = "*"
+pypi = "2.1"
+psycopg2-binary = "2.9.2"
+djangorestframework = "3.12.4"
+django-heroku = "0.0.0"
+django-cors-headers = "3.10.0"
+asgiref = "3.4.1"
+dj-database-url = "0.5.0"
+django-filter = "21.1"
+pytz = "2021.3"
+sqlparse = "0.4.2"
+whitenoise = "5.3.0"
+Django = "3.2.8"
+Markdown = "3.3.4"
+Pillow = "8.4.0"
 
 [dev-packages]
 
