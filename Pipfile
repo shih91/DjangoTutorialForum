@@ -9,6 +9,7 @@ django-on-heroku = "*"
 pypi = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
+django-heroku = "*"
 
 [dev-packages]
 
