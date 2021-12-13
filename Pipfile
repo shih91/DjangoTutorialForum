@@ -10,6 +10,7 @@ pypi = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-heroku = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
